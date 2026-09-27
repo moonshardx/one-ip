@@ -2,6 +2,7 @@ name = "one-ip"
 main = "public/worker/index.js"
 compatibility_date = "2026-09-09"
 compatibility_flags = ["nodejs_compat"]
+routes = [{ pattern = "ip.funcoin.life", custom_domain = true }]
 
 [assets]
 directory = "./dist"

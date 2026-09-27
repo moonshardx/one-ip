@@ -1,0 +1,25 @@
+name: Weekly upstream sync
+
+# Fork-only schedule. Keeps sync-upstream.yml unmodified so upstream merges stay conflict-free.
+on:
+  schedule:
+    - cron: '23 4 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dispatch:
+    if: github.event.repository.fork
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
+    steps:
+      - name: Run Sync upstream
+        # Dispatch events from GITHUB_TOKEN do start workflow runs.
+        run: gh workflow run sync-upstream.yml --repo "$REPO" --ref main
